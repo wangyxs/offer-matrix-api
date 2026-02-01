@@ -36,6 +36,10 @@ env/
 *.sqlite
 *.sqlite3
 
+# Vector Database (ChromaDB)
+chroma_db_*/
+chroma_db_backup/
+
 # IDE
 .vscode/
 .idea/
