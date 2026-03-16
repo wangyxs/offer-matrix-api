@@ -1,175 +1,118 @@
 # offer-matrix-api
 
-offer-matrix-api 是 Offer Matrix 项目的后端服务，提供用户认证、角色管理、面试记录等功能。
+FastAPI backend for an AI mock interview and interview training platform.
 
-## 功能特性
+This service powers role management, resume and material workflows, AI interview chat, question generation, interview record storage, favorites, and interview analysis. It is built for products that want to combine interview preparation, role-specific practice, and AI feedback into one backend.
 
-- 用户注册和登录
-- JWT令牌认证
-- 用户信息管理
-- 角色管理
-- 面试记录管理
-- 问题库管理
-- 收藏管理
+## What It Does
 
-## 技术栈
+- User registration, login, and JWT-based authentication
+- Role and user-role management
+- Resume and learning material association for each target role
+- AI interview chat APIs for mock interview sessions
+- Interview record storage and analysis
+- AI-generated question sets for role-based training
+- Favorite questions and learning workflows
+- Text-to-speech support for interview interaction
 
-- **框架**: FastAPI
-- **数据库**: SQLite (开发) / PostgreSQL (生产)
-- **ORM**: SQLAlchemy
-- **认证**: JWT (JSON Web Tokens)
-- **密码加密**: bcrypt
+## Product Positioning
 
-## 项目结构
+This repository is the backend layer of the Offer Matrix project. The product is centered on:
 
-```
-offer-matrix-api/
-├── app/
-│   ├── main.py                     # FastAPI应用入口
-│   ├── core/                       # 配置、数据库、安全与中间件
-│   ├── models/                     # SQLAlchemy模型
-│   ├── routers/                    # API路由
-│   ├── schemas/                    # Pydantic数据模式
-│   └── services/                   # 业务服务
-├── scripts/                        # 初始化与维护脚本
-├── requirements.txt                # 依赖包
-├── run.py                          # 启动脚本
-├── API文档.md                       # API说明
-└── README.md                       # 项目说明
-```
+- AI mock interview infrastructure
+- role-based interview preparation
+- resume-aware interview scenarios
+- interview analysis and improvement loops
 
-## 快速开始
+## Tech Stack
 
-### 1. 安装依赖
+- FastAPI
+- SQLAlchemy
+- SQLite for local development
+- PostgreSQL-ready data model for production evolution
+- JWT authentication
+- LLM integration for question generation and interview analysis
+- Edge TTS integration
+
+## Core API Areas
+
+- `/api/auth`
+  Authentication and token issuance
+- `/api/users`
+  User profile and account data
+- `/api/roles`
+  Role definitions, role assignment, resumes, and materials
+- `/api/question-sets`
+  AI-generated interview question sets
+- `/api/interview`
+  Interview chat, TTS, favorites, records, and analysis
+- `/api/interviews`
+  Interview record CRUD endpoints
+
+## Quick Start
+
+### 1. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. 配置环境变量
+### 2. Configure environment variables
 
-复制并编辑 `.env` 文件，设置必要的环境变量：
+Create a local `.env` file:
 
 ```env
-# API Configuration
 API_HOST=0.0.0.0
 API_PORT=8000
 API_RELOAD=true
-
-# Database Configuration
 DATABASE_URL=sqlite:///./offer_matrix.db
-
-# Security
-SECRET_KEY=your-secret-key-change-this-in-production
+SECRET_KEY=change-this-in-production
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
+ZHIPUAI_API_KEY=
+ALIYUN_ACCESS_KEY=
+ALIYUN_SECRET_KEY=
+ALIYUN_APP_ID=
+ALIYUN_APP_KEY=
 ```
 
-### 3. 初始化数据库
+### 3. Initialize the database
 
 ```bash
-python init_db.py
+python scripts/init_db.py
 ```
 
-### 4. 启动服务
+### 4. Start the API
 
 ```bash
 python run.py
 ```
 
-服务将在 http://localhost:8000 启动
+The service runs locally at `http://localhost:8000`.
 
-## API文档
+## API Docs
 
-启动服务后，可以通过以下地址访问API文档：
+- Swagger UI: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
 
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
+Detailed API examples are available in [API文档.md](./API文档.md).
 
-## 主要API接口
+## Project Structure
 
-### 认证相关
-
-- `POST /api/auth/register` - 用户注册
-- `POST /api/auth/login` - 用户登录
-- `POST /api/auth/token` - 获取访问令牌(OAuth2兼容)
-
-### 用户相关
-
-- `GET /api/users/me` - 获取当前用户信息
-- `PUT /api/users/me` - 更新当前用户信息
-- `GET /api/users/{user_id}` - 根据ID获取用户信息
-
-## 默认账户
-
-初始化数据库后，系统会创建一个默认管理员账户：
-
-- 用户名: admin
-- 密码: admin123
-
-## 开发说明
-
-### 数据库迁移
-
-如果需要修改数据库结构，可以使用Alembic进行数据库迁移：
-
-```bash
-pip install alembic
-alembic init alembic
-alembic revision --autogenerate -m "描述"
-alembic upgrade head
+```text
+app/
+├── core/        # Config, database, security, middleware
+├── models/      # SQLAlchemy models
+├── routers/     # FastAPI route modules
+├── schemas/     # Request and response schemas
+└── services/    # AI interview, question generation, analysis, TTS, auth
+scripts/         # Local setup and migration helpers
 ```
 
-### 测试
+## Related Repository
 
-运行测试：
+- Android client: [offer-matrix-android](https://github.com/wangyxs/offer-matrix-android)
 
-```bash
-pytest
-```
+## Keywords
 
-## 安全注意事项
-
-1. 生产环境中务必修改 `SECRET_KEY`
-2. 使用HTTPS协议
-3. 定期更新依赖包
-4. 限制API访问频率
-5. 验证所有输入数据
-
-## 部署
-
-### Docker部署
-
-```dockerfile
-FROM python:3.9
-
-WORKDIR /app
-
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
-EXPOSE 8000
-
-CMD ["python", "run.py"]
-```
-
-### 生产环境配置
-
-1. 使用PostgreSQL数据库
-2. 设置环境变量 `API_RELOAD=false`
-3. 配置反向代理(Nginx)
-4. 设置SSL证书
-
-## 贡献指南
-
-1. Fork项目
-2. 创建功能分支
-3. 提交更改
-4. 推送到分支
-5. 创建Pull Request
-
-## 许可证
-
-MIT License
+AI interview API, mock interview backend, FastAPI interview platform, interview analysis, question generation, resume-based interview, career prep backend
