@@ -1,8 +1,8 @@
-# OfferMatrix API 文档
+# offer-matrix-api 文档
 
 ## 概述
 
-OfferMatrix后端API提供用户认证、角色管理、面试记录等功能。所有API接口使用RESTful风格，支持JSON数据格式。
+offer-matrix-api 提供用户认证、角色管理、面试记录等功能。所有API接口使用 RESTful 风格，支持 JSON 数据格式。
 
 ## 基础信息
 

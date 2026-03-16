@@ -68,7 +68,7 @@ def init_db():
             # 创建管理员用户
             admin_user = User(
                 username="admin",
-                email="admin@offermatrix.com",
+                email="admin@offer-matrix.local",
                 hashed_password=get_password_hash("admin123"),
                 is_active=True
             )

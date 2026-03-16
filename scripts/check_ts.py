@@ -1,8 +1,9 @@
 import sqlite3
-import json
+from pathlib import Path
 
 def check_timestamps():
-    conn = sqlite3.connect('D:/Desktop/OfferMatrix_Project/offer-matrix-backend/backend/offer_matrix.db')
+    db_path = Path(__file__).resolve().parents[1] / "offer_matrix.db"
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     cursor.execute("SELECT created_at FROM interview_records ORDER BY created_at DESC LIMIT 1")
     row = cursor.fetchone()

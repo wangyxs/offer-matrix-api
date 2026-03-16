@@ -1,6 +1,6 @@
-# OfferMatrix Backend
+# offer-matrix-api
 
-OfferMatrix项目的后端服务，提供用户认证、角色管理、面试记录等功能。
+offer-matrix-api 是 Offer Matrix 项目的后端服务，提供用户认证、角色管理、面试记录等功能。
 
 ## 功能特性
 
@@ -23,38 +23,18 @@ OfferMatrix项目的后端服务，提供用户认证、角色管理、面试记
 ## 项目结构
 
 ```
-offer-matrix-backend/
-├── backend/
-│   ├── app/
-│   │   ├── __init__.py
-│   │   ├── main.py                 # FastAPI应用入口
-│   │   ├── core/
-│   │   │   ├── __init__.py
-│   │   │   ├── config.py           # 配置管理
-│   │   │   ├── security.py         # 安全相关(密码加密, JWT)
-│   │   │   └── database.py         # 数据库连接
-│   │   ├── models/
-│   │   │   ├── __init__.py
-│   │   │   ├── user.py             # 用户模型
-│   │   │   ├── role.py             # 角色模型
-│   │   │   └── interview.py        # 面试记录模型
-│   │   ├── schemas/
-│   │   │   ├── __init__.py
-│   │   │   ├── user.py             # 用户数据模式
-│   │   │   ├── auth.py             # 认证数据模式
-│   │   │   └── common.py           # 通用数据模式
-│   │   ├── routers/
-│   │   │   ├── __init__.py
-│   │   │   ├── auth.py             # 认证路由
-│   │   │   └── users.py            # 用户路由
-│   │   └── services/
-│   │       ├── __init__.py
-│   │       ├── auth_service.py     # 认证服务
-│   │       └── user_service.py     # 用户服务
-│   ├── .env                         # 环境变量
-│   ├── requirements.txt             # 依赖包
-│   ├── run.py                       # 启动脚本
-│   └── init_db.py                  # 数据库初始化脚本
+offer-matrix-api/
+├── app/
+│   ├── main.py                     # FastAPI应用入口
+│   ├── core/                       # 配置、数据库、安全与中间件
+│   ├── models/                     # SQLAlchemy模型
+│   ├── routers/                    # API路由
+│   ├── schemas/                    # Pydantic数据模式
+│   └── services/                   # 业务服务
+├── scripts/                        # 初始化与维护脚本
+├── requirements.txt                # 依赖包
+├── run.py                          # 启动脚本
+├── API文档.md                       # API说明
 └── README.md                       # 项目说明
 ```
 

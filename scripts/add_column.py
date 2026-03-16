@@ -1,7 +1,9 @@
 import sqlite3
+from pathlib import Path
 
 def add_column():
-    conn = sqlite3.connect('d:/Desktop/OfferMatrix_Project/offer-matrix-backend/backend/offer_matrix.db')
+    db_path = Path(__file__).resolve().parents[1] / "offer_matrix.db"
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     
     try:

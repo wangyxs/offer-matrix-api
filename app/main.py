@@ -24,7 +24,7 @@ limiter = Limiter(key_func=get_remote_address)
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
-    description="OfferMatrix Backend API"
+    description="offer-matrix-api service"
 )
 
 # 添加速率限制中间件
@@ -60,7 +60,7 @@ app.mount("/uploads", StaticFiles(directory=str(uploads_dir)), name="uploads")
 @app.get("/")
 async def root():
     return {
-        "message": "OfferMatrix Backend is running!",
+        "message": "offer-matrix-api is running!",
         "status": "ok"
     }
 
